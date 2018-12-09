@@ -200,9 +200,9 @@ def calculateFlags(flags, used_mods, gameMode):
 		flagsOutput += " MultipleOsuClients (8);"
 	if flags & 16:
 		flagsOutput += " ChecksumFailure (16);"
-	if flags & 32 and fl:
+	if flags & 32 and flashlight:
 		flagsOutput += " FlashlightChecksumIncorrect (32);"
-	if flags & 256 and fl:
+	if flags & 256 and flashlight:
 		flagsOutput += " FlashLightImageHack (256);"
 	if flags & 512 and gameMode == 0:
 		flagsOutput += " SpinnerHack (512);"
