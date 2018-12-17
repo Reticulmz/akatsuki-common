@@ -11,7 +11,7 @@ def newFirst(userID, scoreID, md5, mode, rx=0):
 	# check if a score on that beatmap already exists with same mode
 	result = glob.db.fetch("SELECT scoreid FROM scores_first WHERE beatmap_md5 = '{}' AND mode = '{}' AND rx = '{relax}' LIMIT 1".format(md5, mode, relax=1 if rx else 0))
 	if result is None:
-		glob.db.execute("INSERT INTO scores_first VALUES('{}', '{}', '{}', '{}', '{relax}')".format(userID, scoreID, md5, mode, relax=1 if rx else 0))
+		glob.db.execute("INSERT INTO scores_first VALUES('{}', '{}', '{}', '{}', '{relax}')".format(scoreID, userID, md5, mode, relax=1 if rx else 0))
 	else:
 		glob.db.execute("UPDATE scores_first SET userid = '{}', scoreid = '{}' WHERE beatmap_md5 = '{}' AND mode = '{}' AND rx = '{relax}'".format(userID, scoreID, md5, mode, relax=1 if rx else 0))
 
