@@ -1117,24 +1117,21 @@ def logHardware(userID, hashes, activation = False):
 		username = getUsername(userID)
 
 		# cmyui vars
-		immune = False
-		usualMAC = '4a806c04c8ad54d4a740ce1a9f439469'
-		usualUniqueId = 'd5c44596adc4f64614c9ec4726ec85bb'
-		usualDiskId = '649c53dd4b14ec8271cb06ab0253df55'
-		if usualMAC == hashes[2] and usualUniqueId == hashes[3] and usualDiskId == hashes[4]:
-			immune = True # yay its him
+		usualMAC = glob.conf.config['cmyui']['mac']
+		usualUniqueId = glob.conf.config['cmyui']['unique']
+		usualDiskId = glob.conf.config['cmyui']['disk']
 
 		if userID == 1001: # Remove cmyui permissions if on a HWID different than usual.. Just safety procautions.. TODO: make this for all admins
 			if usualMAC == hashes[2] and usualUniqueId == hashes[3] and usualDiskId == hashes[4]:
-				annmsg = "{}: Usual login detected. Allowing permissions.".format(username)
-				params = urlencode({"k": "zjg3DLf6tVm188C6sP8C5cPZMnq05pHzKstW4J8FUIza7arism", "to": "#osu", "msg": annmsg})
+				annmsg = "{}: Valid login.".format(username)
+				params = urlencode({"k": glob.conf.config['server']['cikey'], "to": "#admin", "msg": annmsg})
 				requests.get("http://127.0.0.1:5001/api/v1/fokabotMessage?{}".format(params))
 			else:
-				annmsg = "{}: Unusual login detected. Disallowing permissions.".format(username)
-				params = urlencode({"k": "zjg3DLf6tVm188C6sP8C5cPZMnq05pHzKstW4J8FUIza7arism", "to": "#osu", "msg": annmsg})
+				annmsg = "{}: Invalid login.".format(username)
+				params = urlencode({"k": glob.conf.config['server']['cikey'], "to": "#admin", "msg": annmsg})
 				requests.get("http://127.0.0.1:5001/api/v1/fokabotMessage?{}".format(params))
 				log.cmyui("{}: Unusual login detected.\n\nHashes: {}|{}|{}".format(userID, hashes[2], hashes[3], hashes[4]), discord="cm")
-				setPrivileges(userID, 3)
+				ban(userID)
 
 		# Get the list of banned or restricted users that have logged in from this or similar HWID hash set
 		if hashes[2] == "b4ec3c4334a0249dae95c284ec5983df":
@@ -1168,8 +1165,6 @@ def logHardware(userID, hashes, activation = False):
 			# Get the total numbers of logins
 			total = glob.db.fetch("SELECT COUNT(*) AS count FROM hw_user WHERE userid = %s LIMIT 1", [userID])
 			# and make sure it is valid
-			if immune:
-				continue
 			if total is None:
 				continue
 			total = total["count"]
