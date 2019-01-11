@@ -1,7 +1,7 @@
 from common.constants import mods
 from objects import glob
 
-def newFirst(userID, scoreID, md5, mode, rx=0):
+def newFirst(scoreID, userID, md5, mode, rx=0):
 	"""
 	set score into db
 
