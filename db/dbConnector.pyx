@@ -232,7 +232,7 @@ class db:
 
 	def fetchAll(self, query, params=None):
 		"""
-		Fetch all values from db that matche given query.
+		Fetch all values from db that match given query.
 		Calls self.fetch with all = True.
 
 		:param query: query to execute. You can bind parameters with %s
