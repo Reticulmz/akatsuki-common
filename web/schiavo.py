@@ -17,7 +17,7 @@ class schiavo:
 		"""
 		self.maxRetries = 20
 
-	def sendMessage(self, message, botURL, customParams=""):
+	def sendMessage(self, message, botURL):
 		"""
 		Send a generic message through schiavo api
 
@@ -33,52 +33,10 @@ class schiavo:
 			return
 		else:
 			embed = Webhook(botURL, color=randint(100000, 999999))
-			if customParams == "":
-				embed.set_author(name='cmyui\'s schiavo', icon='https://a.akatsuki.pw/999', url="http://akatsuki.pw/")
-				#embed.set_image('https://i.namir.in//bTr.png')
-				embed.set_title(title="Logging Utility")
-				embed.add_field(name=message, value='** **')
-			elif customParams[0] == "sendMapRequest":
-				"""
-				:customParams: passed from command
-
-				1 = fro
-				2 = userID
-				3 = beatmapset_id
-				4 = song_name
-				5 = mapID
-				6 = rankType
-				7 = mapType
-				8 = gameMode
-				"""
-				embed.set_author(name=customParams[1], icon='http://a.akatsuki.pw/{}'.format(customParams[2]), url="http://akatsuki.pw/u/{}".format(customParams[2]))
-				embed.set_image('https://assets.ppy.sh/beatmaps/{}/covers/cover.jpg?1522396856'.format(customParams[3]))
-				embed.set_title(title="{}".format(customParams[4]), url="http://akatsuki.pw/b/{}".format(customParams[5]))
-				embed.set_footer(text='requested for {}ed on'.format(customParams[6], icon='https://i.namir.in/SXJisKLwL.png', ts=True))
-				embed.add_field(name='This **{}** has been requested for **{}ed** by {} for gamemode {}.'.format(customParams[7], customParams[6], customParams[1], customParams[8]), value='** **')
-
-			elif customParams[0] == "sendMapRequestAccepted":
-				"""
-				:customParams: passed from command
-
-				1 = fro
-				2 = userID
-				3 = beatmapset_id
-				4 = song_name
-				5 = mapID
-				6 = rankType
-				7 = mapType
-				8 = gameMode
-				"""
-				embed.set_author(name=customParams[1], icon="http://a.akatsuki.pw/{}".format(customParams[2]), url="http://akatsuki.pw/u/{}".format(customParams[2]))
-				embed.set_image('https://assets.ppy.sh/beatmaps/{}/covers/cover.jpg?1522396856'.format(customParams[3]))
-				embed.set_title(title="{}".format(customParams[4]), url="http://akatsuki.pw/b/{}".format(customParams[5]))
-				embed.set_footer(text='{}ed on'.format(customParams[6]), icon='https://i.namir.in/SXJisKLwL.png', ts=True)
-				embed.add_field(name='This {} has been **{}ed** on gamemode {}'.format(customParams[7], customParams[6], customParams[8]), value='** **')
-			else:
-				return "how do u manage this. u specified to use customParams but didnt specify a valid [0] u retard"
-
-			#elif customParams == "userAchieveFirstPlace":
+			embed.set_author(name='cmyui\'s schiavo', icon='https://a.akatsuki.pw/999', url="http://akatsuki.pw/")
+			#embed.set_image('https://i.namir.in//bTr.png')
+			embed.set_title(title="Logging Utility")
+			embed.add_field(name=message, value='** **')
 
 		for _ in range(0, self.maxRetries):
 			try:
