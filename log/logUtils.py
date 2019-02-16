@@ -22,7 +22,7 @@ def logMessage(message, alertType = "INFO", messageColor = bcolors.ENDC, discord
 	"""
 	# Get type color from alertType
 	if alertType == "INFO":
-		typeColor = bcolors.GREEN
+		typeColor = bcolors.CYAN
 	elif alertType == "WARNING":
 		typeColor = bcolors.YELLOW
 	elif alertType == "ERROR":
@@ -32,7 +32,7 @@ def logMessage(message, alertType = "INFO", messageColor = bcolors.ENDC, discord
 	elif alertType == "DEBUG":
 		typeColor = bcolors.PINK
 	elif alertType == "CMYUI":
-		typeColor = bcolors.CYAN
+		typeColor = bcolors.PINK
 	else:
 		typeColor = bcolors.ENDC
 
