@@ -33,9 +33,9 @@ class schiavo:
 			return
 		else:
 			embed = Webhook(botURL, color=randint(100000, 999999))
-			embed.set_author(name='cmyui\'s schiavo', icon='https://a.akatsuki.pw/999', url="http://akatsuki.pw/")
+			embed.set_author(name='Aika', icon='https://a.akatsuki.pw/999', url="http://akatsuki.pw/")
 			#embed.set_image('https://i.namir.in//bTr.png')
-			embed.set_title(title="Logging Utility")
+			embed.set_title(title="** **")
 			embed.add_field(name=message, value='** **')
 
 		for _ in range(0, self.maxRetries):
