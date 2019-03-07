@@ -25,8 +25,12 @@ def incrementPlaytime(userID, gameMode=0, length=0):
 	result = glob.db.fetch("SELECT playtime_{gm} as playtime FROM users_stats WHERE id = %s".format(gm=modeForDB), [userID])
 	if result is not None:
 		glob.db.execute("UPDATE users_stats SET playtime_{gm} = %s WHERE id = %s".format(gm=modeForDB), [(int(result['playtime'])+int(length)), userID])
-	else:
-		print("something went wrong...")
+
+def getPlaytime(userID, gameMode=0):
+	modeForDB = gameModes.getGameModeForDB(gameMode)
+	result = glob.db.fetch("SELECT playtime_{gm} as playtime FROM users_stats WHERE id = %s".format(gm=modeForDB), [userID])
+	if result is not None:
+		return int(result['playtime'])
 
 def getRelaxStats(userID, gameMode):
 	"""
