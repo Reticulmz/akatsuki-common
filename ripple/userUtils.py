@@ -558,6 +558,20 @@ def getPP(userID, gameMode):
 	else:
 		return 0
 
+def checkAkatsukiNotifications(userID):
+	"""
+	Check if a user has disabled their akatsuki notifications (switching between regular and relax)
+
+	:param userID: user id
+	:return:
+	"""
+	result = glob.db.fetch("SELECT switch_notifs FROM users WHERE id = {} LIMIT 1".format(userID))
+	if result is not None:
+		return result["switch_notifs"]
+	else:
+		return 0
+
+
 def incrementReplaysWatched(userID, gameMode, mods):
 	"""
 	Increment userID's replays watched by others relative to gameMode
