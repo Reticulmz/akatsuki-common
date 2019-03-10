@@ -571,6 +571,24 @@ def checkAkatsukiNotifications(userID):
 	else:
 		return 0
 
+def toggleAkatsukiNotifications(userID):
+	"""
+	Toggle a users akatsuki notifications (switching between regular and relax)
+
+	:param userID: user id
+	"""
+
+	notif_current = checkAkatsukiNotifications(userID)
+
+	if notif_current == 1:
+		notif_update = 0
+	elif notif_current == 0:
+		notif_update = 1
+	else:
+		return 2
+
+	glob.db.execute("UPDATE users SET switch_notifs = {update} WHERE id = {userid}".format(update=notif_update, userid=userID))
+	return notif_update
 
 def incrementReplaysWatched(userID, gameMode, mods):
 	"""
