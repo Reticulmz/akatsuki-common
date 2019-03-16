@@ -15,6 +15,13 @@ def newFirst(scoreID, userID, md5, mode, rx=0):
 	else:
 		glob.db.execute("UPDATE scores_first SET userid = '{}', scoreid = '{}' WHERE beatmap_md5 = '{}' AND mode = '{}' AND rx = '{relax}'".format(userID, scoreID, md5, mode, relax=1 if rx else 0))
 
+def getPPLimit(gameMode, rx, fl):
+	"""
+	Get PP Limit from DB based on gameMode
+	"""
+	result = glob.db.fetch("SELECT {rx}{fl}pp FROM pp_limits WHERE gamemode = {gamemode}".format(rx='relax_' if rx else '', fl='flashlight_' if fl else '', gamemode=gameMode))
+
+	return result['{rx}{fl}pp'.format(rx='relax_' if rx else '', fl='flashlight_' if fl else '')]
 
 def isRankable(m):
 	"""

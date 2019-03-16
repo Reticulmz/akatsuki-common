@@ -32,6 +32,15 @@ def getPlaytime(userID, gameMode=0):
 	if result is not None:
 		return int(result['playtime'])
 
+def getPlaytimeTotal(userID):
+	result = glob.db.fetch("SELECT playtime_std, playtime_ctb, playtime_mania, playtime_taiko FROM users_stats WHERE id = %s", [userID])
+	if result is not None:
+		return int(result['playtime_std'] + result['playtime_ctb'] + result['playtime_mania'] + result['playtime_taiko'])
+
+def noPPLimit(userID, relax):
+	result = glob.db.fetch("SELECT unrestricted_pp FROM {rx}_stats WHERE id = {userid}".format(rx='rx' if relax else 'users', userid=userID))
+	return result['unrestricted_pp']
+
 def getRelaxStats(userID, gameMode):
 	"""
 	Get all relax stats relative to `gameMode`
