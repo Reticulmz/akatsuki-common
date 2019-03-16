@@ -103,6 +103,17 @@ def getIDSafe(_safeUsername):
 		return result["id"]
 	return None
 
+def getMapNominator(beatmapID):
+	"""
+	Get the user who ranked a map by beatmapID
+	"""
+	result = glob.db.fetch("SELECT rankedby FROM beatmaps WHERE beatmap_id = {}".format(beatmapID))
+
+	if result is None:
+		return None
+
+	return result['rankedby']
+
 def getID(username):
 	"""
 	Get username's user ID from userID redis cache (if cache hit)
