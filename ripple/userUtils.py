@@ -41,6 +41,9 @@ def noPPLimit(userID, relax):
 	result = glob.db.fetch("SELECT unrestricted_pp FROM {rx}_stats WHERE id = {userid}".format(rx='rx' if relax else 'users', userid=userID))
 	return result['unrestricted_pp']
 
+def whitelistUserPPLimit(userID, rx):
+	glob.db.execute("UPDATE {rx}_stats SET unrestricted_pp = 1 WHERE id = {userid}".format(rx='rx' if rx else 'users', userid=userID))
+
 def getRelaxStats(userID, gameMode):
 	"""
 	Get all relax stats relative to `gameMode`
