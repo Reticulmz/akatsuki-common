@@ -1440,6 +1440,22 @@ def removeFromLeaderboard(userID):
 		if country is not None and len(country) > 0 and country != "xx":
 			glob.redis.zrem("ripple:leaderboard:{}:{}".format(mode, country), str(userID))
 
+def setUserTracked(userID):
+	"""
+	Make it so when a user logs in, it sends a message to discord
+	(usually if we want to ask them for a liveplay or something)
+	"""
+
+	glob.db.execute("UPDATE users SET tracked = 1 WHERE id = {}".format(userID))
+
+def getUserTracked(userID):
+	"""
+	Check if a user is currently being tracked
+	"""
+
+	result = glob.db.fetch("SELECT tracked FROM users WHERE id = {}".format(userID))
+	return result['tracked']
+
 def deprecateTelegram2Fa(userID):
 	"""
 	Checks whether the user has enabled telegram 2fa on his account.
