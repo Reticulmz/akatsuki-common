@@ -11,6 +11,7 @@ from common.ripple import passwordUtils, scoreUtils
 from objects import glob
 from common.akatsuki.discord_hooks import Webhook
 from urllib.parse import urlencode
+import random
 
 def getBeatmapTime(beatmapID):
 	p = 0
@@ -19,6 +20,33 @@ def getBeatmapTime(beatmapID):
 		p = json.loads(r)['TotalLength']
 
 	return p
+
+def submitBeatmapRequest(username, beatmapID, mapType, gameMode):
+	userID = getID(username)
+
+	if mapType == 's':
+		mapType = 'set'
+	elif mapType == 'b':
+		mapType = 'map'
+	else:
+		return False
+
+	beatmap = glob.db.fetch("SELECT * FROM beatmaps WHERE beatmap_id = {}".format(beatmapID))
+
+	if beatmap is None:
+		return False
+
+	embed = Webhook(glob.conf.config['webhooks']['rank_requests'], color=random.randint(100000, 999999))
+	embed.set_author(name=username, icon='http://a.akatsuki.pw/{}'.format(userID), url="http://akatsuki.pw/u/{}".format(userID))
+	embed.set_image('https://assets.ppy.sh/beatmaps/{}/covers/cover.jpg?1522396856'.format(beatmap['beatmapset_id']))
+	embed.set_title(title="{}".format(beatmap['song_name']), url="http://akatsuki.pw/b/{}".format(beatmapID))
+	embed.set_footer(text='cmyui beatmap nomination system v1.0a', icon='https://i.namir.in//sYi.png', ts=True)
+	embed.add_field(name='This **{}** has been nominated by {} for gamemode **{}**.'.format(mapType, username, gameMode), value='** **')
+	embed.post()
+
+def checkUserQAT(userID):
+	result = glob.db.fetch("SELECT qat FROM users WHERE id = {}".format(userID))
+	return True if result['qat'] == 1 else False
 
 def incrementPlaytime(userID, gameMode=0, length=0):
 	modeForDB = gameModes.getGameModeForDB(gameMode)
